@@ -4,14 +4,11 @@ package customeregistration;
 import java.awt.*;
 import javax.swing.*;
 
-
 public class RegPage extends JFrame{
     
    private ImageIcon icon = new ImageIcon("src//customer.png");
    public JLabel pic = new JLabel(icon);
    
-    
-    
     
     private JLabel namelbl = new JLabel("Name                              ");
     private JTextField nametxt = new JTextField(20);
@@ -157,13 +154,5 @@ public class RegPage extends JFrame{
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+       
 }
