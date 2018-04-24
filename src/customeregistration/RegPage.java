@@ -44,11 +44,11 @@ public class RegPage extends JFrame implements ActionListener{
     private final JTextField emailtxt = new JTextField(20);
     
     private final JLabel doblbl = new JLabel("Date of Birth                       ");
-    String [] days = {" ","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"
+    String [] days = {"dd","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"
                     ,"17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-    String [] months = {" ","January","February","March","April","May","June","July","August"
+    String [] months = {"mm","January","February","March","April","May","June","July","August"
                         ,"September","October","November","December"};
-    String [] years = {" ","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000"
+    String [] years = {"yy","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000"
                         ,"2001","2002","2003","2004","2005","2006","2007","2008"};
     private final JComboBox dayCombo = new JComboBox(days);
     private final JComboBox monthCombo = new JComboBox(months);
@@ -150,8 +150,8 @@ public class RegPage extends JFrame implements ActionListener{
         
         submitbtn.addActionListener(this);
         clearbtn.addActionListener(this);
-        //nametxt.addKeyListener(new TextFieldListener());
-        //surnametxt.addKeyListener(new TextFieldListener());
+        nametxt.addKeyListener(new TextFieldListener());
+        surnametxt.addKeyListener(new TextFieldListener());
     }
     
    
@@ -316,7 +316,28 @@ public class RegPage extends JFrame implements ActionListener{
     }
     
     
-  
+      private class TextFieldListener implements KeyListener
+{
+    
+    @Override
+    public void keyPressed(KeyEvent e)
+    {}
+    @Override
+    public void keyReleased(KeyEvent e)
+    {}
+    @Override
+    public void keyTyped(KeyEvent e)
+    {
+         char c = e.getKeyChar();
+      if (!((c >= 'A') && (c <= 'Z') || (c >= 'a') && (c<='z') ||
+         (c == KeyEvent.VK_BACK_SPACE) ||
+         (c == KeyEvent.VK_DELETE))) {
+        getToolkit().beep();
+        e.consume(); 
+        }
+
+    }
+}
 
      
 }
