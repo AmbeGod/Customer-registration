@@ -11,7 +11,11 @@ public class RegPage extends JFrame implements ActionListener{
    private final ImageIcon icon = new ImageIcon("src//customer.png");
    public JLabel pic = new JLabel(icon);
    
-    
+     private JLabel empty = new JLabel("                                      ");
+   private JLabel searchlbl = new JLabel("** Enter username: ");
+   private JTextField searchtxt = new JTextField(20);
+   private JButton searchbtn = new JButton("Search");
+   private JButton delbtn = new JButton ("Delete");
     
     
     private final JLabel namelbl = new JLabel("Name                              ");
@@ -44,11 +48,11 @@ public class RegPage extends JFrame implements ActionListener{
     private final JTextField emailtxt = new JTextField(20);
     
     private final JLabel doblbl = new JLabel("Date of Birth                       ");
-    String [] days = {"dd","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"
+    String [] days = {"day","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"
                     ,"17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-    String [] months = {"mm","January","February","March","April","May","June","July","August"
+    String [] months = {"month","January","February","March","April","May","June","July","August"
                         ,"September","October","November","December"};
-    String [] years = {"yy","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000"
+    String [] years = {"year","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000"
                         ,"2001","2002","2003","2004","2005","2006","2007","2008"};
     private final JComboBox dayCombo = new JComboBox(days);
     private final JComboBox monthCombo = new JComboBox(months);
@@ -141,17 +145,29 @@ public class RegPage extends JFrame implements ActionListener{
         add(pane);
         
         
+        add(clearbtn);
+        add(submitbtn);
+        add(empty);
+        add(searchlbl);
+        add(searchtxt);
+        add(searchbtn);
+        add(delbtn);
         
-        panel.add(clearbtn);
-        panel.add(submitbtn);
+       searchlbl.setForeground(Color.RED);
+       searchbtn.setForeground(Color.RED);
+       delbtn.setForeground(Color.RED);
         
        
         add("North", panel);
         
         submitbtn.addActionListener(this);
         clearbtn.addActionListener(this);
+        searchbtn.addActionListener(this);
+        delbtn.addActionListener(this);
         nametxt.addKeyListener(new TextFieldListener());
         surnametxt.addKeyListener(new TextFieldListener());
+         searchtxt.addKeyListener(new TextFieldListener());
+        usernametxt.addKeyListener(new TextFieldListener());
     }
     
    
@@ -222,6 +238,44 @@ public class RegPage extends JFrame implements ActionListener{
         }
             }
         }
+        
+         else if (ee.getSource() == searchbtn){
+               String search = searchtxt.getText();
+           if (search.length() < 1){
+               JOptionPane.showMessageDialog(null, "Please enter a username");
+           }
+           else
+           {
+            
+            conn.connect();
+            if(conn.check_username(search) == true)
+              JOptionPane.showMessageDialog(null, "User already Exist");  
+        else
+            JOptionPane.showMessageDialog(null, "User does not exist");
+           }
+    }
+           
+           
+           
+           else if (ee.getSource() == delbtn){
+                String search = searchtxt.getText();
+           if (search.length() < 1){
+               JOptionPane.showMessageDialog(null, "Please enter a username");
+           }
+           else
+           {
+              conn.connect(); 
+              if(conn.delete_user(searchtxt.getText()) == true)
+                JOptionPane.showMessageDialog(null, "User successfully deleted");
+              else 
+                JOptionPane.showMessageDialog(null, "User does not exist");
+                  
+           }
+           }
+           
+    
+    
+        
         
         else if (ee.getSource() == clearbtn){
            nametxt.setText("");
